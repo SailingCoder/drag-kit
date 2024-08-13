@@ -2,6 +2,7 @@
 
 `drag-kit` 是一个轻量级的 JavaScript 库，用于实现元素的拖拽功能。它支持多种配置选项，包括初始位置、保存位置、拖拽区域限制、对齐方式等。这个库不仅适用于普通页面，还可以处理 iframe 中的拖拽需求。支持各个前端库，如vue、vue3、react
 
+
 ## 特性
 
 - **基础拖拽**：可以拖拽指定的元素。
@@ -26,15 +27,8 @@ npm install drag-kit
 ```javascript
 import { createDraggable } from 'drag-kit';
 
-const draggable = createDraggable('draggableElementId', {
+createDraggable('draggableElementId', {
   initialPosition: { x: '100px', y: '100px' }, // 支持calc
-  shouldSave: true,
-  dragArea: document.getElementById('dragArea'),
-  lockAxis: 'x',
-  edgeBuffer: 10,
-  gridSize: 20,
-  mode: 'viewport',
-  snapMode: 'auto'
 });
 ```
 
@@ -72,7 +66,7 @@ const draggable = createDraggable('draggableElementId', {
 ```javascript
 import { createDraggable } from 'drag-kit';
 
-const draggable = createDraggable('draggableElementId', {
+createDraggable('draggableElementId', {
   initialPosition: { x: '50px', y: '50px' },
   shouldSave: true,
   dragArea: document.getElementById('dragArea'),
@@ -83,6 +77,9 @@ const draggable = createDraggable('draggableElementId', {
   snapMode: 'auto'
 });
 ```
+
+
+文档更新中。。。
 
 ## 兼容性
 
