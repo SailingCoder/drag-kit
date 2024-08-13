@@ -1,0 +1,36 @@
+{
+  "name": "drag-kit",
+  "version": "1.0.0",
+  "description": "实现元素的拖拽功能，支持vue2、vue3、react",
+  "main": "dist/index.umd.js",
+  "module": "dist/index.mjs",
+  "types": "dist/types/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite --config vite.config.ts"
+  },
+  "author": "Sailing",
+  "license": "MIT",
+  "keywords": [
+    "drag",
+    "vue",
+    "vue3",
+    "vue2",
+    "react"
+  ],
+  "dependencies": {
+    "pinia": "^2.1.7",
+    "vue": "^3.4.31"
+  },
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^11.1.6",
+    "@vitejs/plugin-vue": "^5.0.5",
+    "@vue/compiler-sfc": "^3.4.31",
+    "less": "^4.2.0",
+    "typescript": "^5.5.3",
+    "vite": "^5.3.3"
+  }
+}
