@@ -21,6 +21,22 @@ export default defineConfig({
       ],
     },
     minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true, // 删除 console
+        pure_funcs: ['console.info', 'console.debug'], // 删除指定函数调用
+      },
+      mangle: {
+        properties: {
+          regex: /^_/, // 混淆以 _ 开头的私有属性
+        },
+      },
+      format: {
+        comments: false, // 删除所有注释
+      },
+      toplevel: true, // 混淆顶级作用域
+      keep_fnames: false, // 不保留函数名
+    },
   },
   plugins: [vue()],
   resolve: {
