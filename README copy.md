@@ -6,9 +6,13 @@
 ## 特性
 
 - **基础拖拽**：可以拖拽指定的元素。
+- **方向锁定**：支持锁定拖拽的方向（水平或垂直）。
+- **自动对齐**：支持拖拽结束时自动对齐到视口边缘。
+- **边缘缓冲**：可以设置元素与边缘的缓冲距离。
+- **网格模式**：拖拽时可以对齐到指定网格。
 - **保存和恢复位置**：支持将拖拽位置保存到本地存储，并在页面加载时恢复。
+- **多模式支持**：支持视口模式、固定模式和限制模式。
 - **iframe 兼容**：可以处理 iframe 内的拖拽情况，确保兼容性。
-- **支持各个前端库**：支持Vue2、Vue3、React、JavaScript等前端库。
 
 ## 安装
 
@@ -37,6 +41,12 @@ createDraggable('draggableElementId', {
   - `onDragStart`: 拖拽开始时的回调函数。
   - `onDrag`: 拖拽过程中的回调函数。
   - `onDragEnd`: 拖拽结束时的回调函数。
+  - `dragArea`: 拖拽区域的元素（仅在模式为 `restricted` 时有效）。
+  - `lockAxis`: 锁定拖拽的方向（`x` 或 `y`）。
+  - `edgeBuffer`: 边缘缓冲距离（像素）。
+  - `gridSize`: 网格对齐的大小（像素）。
+  - `mode`: 拖拽模式（`viewport`、`fixed` 或 `restricted`）。
+  - `snapMode`: 拖拽结束时的对齐方式（`none`、`auto`、`right`、`left`、`top`、`bottom`）。
 
 ### 示例
 
@@ -45,6 +55,9 @@ createDraggable('draggableElementId', {
 ```html
 <div id="draggableElementId" style="width: 100px; height: 100px; background: red; display: none">
   拖拽我
+</div>
+<div id="dragArea" style="width: 100%; height: 100%; position: relative; display: none;">
+  拖拽区域
 </div>
 ```
 
@@ -56,15 +69,12 @@ import { createDraggable } from 'drag-kit';
 createDraggable('draggableElementId', {
   initialPosition: { x: '50px', y: '50px' },
   shouldSave: true,
-  onDragStart: (e) => {
-      console.log('onDragEnd', e.offsetLeft, e.offsetTop);
-  },
-  onDrag: (e) => {
-      // console.log('onDrag', e);
-  },
-  onDragEnd: (e) => {
-      console.log('onDragEnd', e.offsetLeft, e.offsetTop);
-  },
+  dragArea: document.getElementById('dragArea'),
+  lockAxis: 'y',
+  edgeBuffer: 20,
+  gridSize: 10,
+  mode: 'restricted',
+  snapMode: 'auto'
 });
 ```
 

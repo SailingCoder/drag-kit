@@ -1,57 +1,38 @@
 <template>
-    <div class="container">
-        <div class="user-content">
-            <div class="user-row">
-                <p>UserTracker</p>
-                <p>当前未完成的操作数量: {{ pendingActionsCount }}</p>
-                <div class="box">
-                    <button @click="handleStartAction">StartAction</button>
-                    <button @click="handleEndAction">EndAction</button>
-                </div>
-            </div>
-            <div class="user-row">
-                <p>用户跟踪数据: <pre>{{ userTrackerData }}</pre></p>
-            </div>
+    <div>
+        <div id="draggableElementId" style="width: 100px; height: 100px; background: red; display: none;">
+            拖拽我
+        </div>
+        <div id="dragArea" style="width: 500px; height: 500px; background-color: yellow;position: relative;display: none;">
+            拖拽区域
         </div>
     </div>
 </template>
 
 <script lang="ts" setup>
 import { ref, onMounted, inject, computed } from 'vue';
-import { UserInteractionTracker } from '../../package/index';
+import { createDraggable } from '../../package/index';
 
-// 反应式数据
-const pendingActionsCount = ref(0);
-const userTrackerData = ref<any>(null);
-
-const tracker = new UserInteractionTracker({
-    enabled: true,
-    uploadLog: (action, type, data) => {
-        console.log('uploadLog', action, type, data);
-        userTrackerData.value = data;
-    }
-})
-
-// 获取未完成操作的数量
-const getPendingActions = () => {
-    pendingActionsCount.value = Object.keys(tracker.getPendingActions()).length;
-};
-
-// 开始操作
-const handleStartAction = () => {
-    tracker.startAction('action_name');
-    getPendingActions();
-};
-
-// 结束操作
-const handleEndAction = () => {
-    tracker.endAction('action_name');
-    getPendingActions();
-};
-
-// 组件挂载时获取未完成操作数量
 onMounted(() => {
-    getPendingActions();
+    createDraggable('draggableElementId', {
+        initialPosition: { x: '50px', y: '50px' },
+        shouldSave: true,
+        onDragStart: (e) => {
+            console.log('onDragEnd', e.offsetLeft, e.offsetTop);
+        },
+        onDrag: (e) => {
+            // console.log('onDrag', e);
+        },
+        onDragEnd: (e) => {
+            console.log('onDragEnd', e.offsetLeft, e.offsetTop);
+        },
+        // dragArea: document.getElementById('dragArea'),
+        // lockAxis: 'y',
+        // edgeBuffer: 20,
+        // gridSize: 10,
+        // mode: 'restricted',
+        // snapMode: 'auto'
+    });
 });
 </script>
 
