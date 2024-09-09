@@ -21,6 +21,9 @@
     "vue2",
     "react"
   ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
   "dependencies": {
     "pinia": "^2.1.7",
     "vue": "^3.4.31"

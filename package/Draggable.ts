@@ -60,7 +60,6 @@ export function createDraggable(elementId: string, options: DraggableOptions = {
   const initialY = options.initialPosition?.y || '0px';
   element.style.left = initialX;
   element.style.top = initialY;
-  console.log('initialX', initialX, 'initialY', initialY);
 
   const defaultOptions: DraggableOptions = {
     shouldSave: false,
