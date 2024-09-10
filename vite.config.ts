@@ -17,6 +17,7 @@ export default defineConfig({
       plugins: [
         typescript({
           tsconfig: './tsconfig.json', // 确保 tsconfig.json 路径正确
+          exclude: ['node_modules', '**/__tests__/**'], // 确保正确排除不必要的文件
         }),
       ],
     },
@@ -31,9 +32,9 @@ export default defineConfig({
           regex: /^_/, // 混淆以 _ 开头的私有属性
         },
       },
-      format: {
-        comments: false, // 删除所有注释
-      },
+      // format: {
+      //   comments: false, // 删除所有注释
+      // },
       toplevel: true, // 混淆顶级作用域
       keep_fnames: false, // 不保留函数名
     },

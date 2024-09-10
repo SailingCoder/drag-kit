@@ -11,5 +11,5 @@
     "skipLibCheck": true
   },
   "include": ["./src/drag/**/*"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "dist"]
 }
