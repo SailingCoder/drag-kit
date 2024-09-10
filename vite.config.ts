@@ -12,7 +12,7 @@ export default defineConfig({
     },
     rollupOptions: {
       output: {
-        dir: 'dist',
+        dir: 'lib',
       },
       plugins: [
         typescript({

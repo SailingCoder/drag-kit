@@ -1,12 +1,12 @@
 {
   "name": "drag-kit",
-  "version": "1.0.5",
+  "version": "1.0.4-beta.0",
   "description": "实现元素的拖拽功能，支持vue2、vue3、react",
-  "main": "dist/index.umd.js",
-  "module": "dist/index.mjs",
-  "types": "dist/types/index.d.ts",
+  "main": "lib/index.umd.js",
+  "module": "lib/index.mjs",
+  "types": "lib/types/index.d.ts",
   "files": [
-    "dist"
+    "lib"
   ],
   "scripts": {
     "build": "vite build",

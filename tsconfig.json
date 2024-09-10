@@ -1,10 +1,10 @@
 {
   "compilerOptions": {
-    "outDir": "./dist",
+    "outDir": "./lib",
     "module": "ESNext",
     "target": "ESNext",
     "declaration": true,
-    "declarationDir": "./dist/types",
+    "declarationDir": "./lib/types",
     "rootDir": "./src/drag",
     "strict": true,
     "esModuleInterop": true,
