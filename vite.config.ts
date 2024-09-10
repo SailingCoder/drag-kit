@@ -5,7 +5,7 @@ import typescript from '@rollup/plugin-typescript';
 export default defineConfig({
   build: {
     lib: {
-      entry: './package/index.ts',
+      entry: './src/drag/index.ts',
       name: 'DragKit',
       fileName: 'index',
       formats: ['es', 'umd'],

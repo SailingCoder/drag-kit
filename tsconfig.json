@@ -5,11 +5,11 @@
     "target": "ESNext",
     "declaration": true,
     "declarationDir": "./dist/types",
-    "rootDir": "./package",
+    "rootDir": "./src/drag",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true
   },
-  "include": ["./package/**/*"],
+  "include": ["./src/drag/**/*"],
   "exclude": ["node_modules"]
 }

@@ -67,6 +67,10 @@ The `mode` parameter defines the drag area and determines where the element can 
 
 ### Vue3 Example
 
+![效果动态图](https://i-blog.csdnimg.cn/direct/22b05079dbe744439933dcbcf860a065.gif)
+
+代码
+
 ```html
 <template>
     <div class="example-container">

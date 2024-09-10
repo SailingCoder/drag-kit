@@ -38,7 +38,7 @@
   
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue';
-import { createDraggable } from '../../packages/v2/index';
+import { createDraggable } from '@/drag/index';
 
 const basic = ref<HTMLElement | null>(null);
 const page = ref<HTMLElement | null>(null);
