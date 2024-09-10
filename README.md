@@ -67,6 +67,10 @@ createDraggable('draggableElementId', {
 
 ### Vue3 示例
 
+![效果动态图](https://i-blog.csdnimg.cn/direct/22b05079dbe744439933dcbcf860a065.gif)
+
+代码
+
 ```html
 <template>
     <div class="example-container">
