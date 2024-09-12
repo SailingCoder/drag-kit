@@ -17,6 +17,7 @@
 - **保存和恢复位置**：支持将拖拽位置保存到本地存储，并在页面加载时恢复。
 - **iframe 兼容**：处理 iframe 内的拖拽问题，确保兼容性。
 - **支持多种前端框架**：适用于 Vue 2、Vue 3、React 等前端框架。
+- **响应式支持**：确保在桌面端和移动设备上都有一致体验。
 
 ## 安装
 
@@ -26,17 +27,59 @@ npm install drag-kit
 
 ## 使用方法
 
-### 基本用法
+### 快速开始
 
-```javascript
+在 Vue 中，使用 onMounted 钩子：
+
+```html
+<template>
+  <div id="draggableElement" style="display: none;">Drag me!</div>
+</template>
+
+<script lang="ts">
+import { onMounted } from 'vue';
 import { createDraggable } from 'drag-kit';
 
-createDraggable('draggableElementId', {
-  initialPosition: { x: '100px', y: '100px' }, // 可选，支持 calc
-});
+export default {
+  setup() {
+    onMounted(() => {
+      const draggable = createDraggable('draggableElement', {
+        initialPosition: { x: '100px', y: '200px' }
+      });
+    });
+  }
+};
+</script>
 ```
 
-### 参数说明
+在 React 中，使用 useEffect 钩子：
+
+```tsx
+import React, { useEffect } from 'react';
+import { createDraggable } from 'drag-kit';
+
+const DraggableComponent: React.FC = () => {
+  useEffect(() => {
+    const draggable = createDraggable('draggableElement', {
+      initialPosition: { x: '100px', y: '200px' }
+    });
+  }, []);
+
+  return <div id="draggableElement" style={{ display: 'none' }}>Drag me!</div>;
+};
+
+export default DraggableComponent;
+```
+
+注意：设置样式 `display: none;` 效果最佳。
+
+### API
+
+```ts
+createDraggable(elementId: string, options?: DraggableOptions): Draggable;
+```
+
+**参数**
 
 - **elementId**: 要使其可拖拽的元素的 ID。（必填）
 - **options**: 配置选项对象，支持以下字段：（选填）
@@ -52,7 +95,7 @@ createDraggable('draggableElementId', {
   - `onDrag`: 拖拽过程中的回调函数。
   - `onDragEnd`: 拖拽结束时的回调函数。
 
-#### `mode` 参数详细说明
+**`mode` 参数详细说明**
 
 `mode` 参数定义了拖拽元素的拖动区域，决定了拖拽元素可以移动的范围：
 
@@ -65,11 +108,10 @@ createDraggable('draggableElementId', {
 3. **`container` 模式**  
    元素只能在指定的 **容器** 内拖动，拖动区域受到容器边界的限制。通过设置 `dragArea` 参数来指定容器元素。适合局部拖动的场景，如面板或对话框内部的元素拖动。
 
-### Vue3 示例
+## 示例集合（以 Vue3 举例）
 
 ![效果动态图](https://i-blog.csdnimg.cn/direct/22b05079dbe744439933dcbcf860a065.gif)
 
-代码
 
 ```html
 <template>
@@ -77,34 +119,34 @@ createDraggable('draggableElementId', {
         <h1 style="padding-top: 80px;">拖拽示例</h1>
     
         <!-- 基本拖拽功能（screen 模式） -->
-        <div id="draggable-screen" class="draggable" ref="basic">
+        <div id="draggable-screen" class="draggable" ref="basic" style="display: none;">
             基本拖拽
         </div>
     
         <!-- 页面范围模式（page 模式） -->
-        <div id="draggable-page" class="draggable" ref="page">
+        <div id="draggable-page" class="draggable" ref="page" style="display: none;">
             页面模式拖拽
         </div>
     
         <!-- 设置边界 -->
         <div id="drag-container">
-            <div id="draggable-bounds" class="draggable" ref="bounds">
+            <div id="draggable-bounds" class="draggable" ref="bounds" style="display: none;">
                 容器内拖拽
             </div>
         </div>
     
         <!-- 锁定 x 轴拖拽 -->
-        <div id="draggable-x-axis" class="draggable" ref="yAxis">
+        <div id="draggable-x-axis" class="draggable" ref="yAxis" style="display: none;">
             锁定 Y 轴拖拽
         </div>
     
         <!-- 网格模式拖拽 -->
-        <div id="draggable-grid" class="draggable" ref="grid">
+        <div id="draggable-grid" class="draggable" ref="grid" style="display: none;">
             网格对齐拖拽
         </div>
 
         <!-- 吸附模式 (screen 模式下) -->
-        <div id="draggable-snap" class="draggable" ref="snap">
+        <div id="draggable-snap" class="draggable" ref="snap" style="display: none;">
             吸附模式拖拽
         </div>
     </div>

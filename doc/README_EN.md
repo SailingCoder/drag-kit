@@ -17,6 +17,7 @@
 - **Position Saving and Restoring**: Save drag positions to local storage and restore them on page reload.
 - **Iframe Compatibility**: Handle drag issues within iframes to ensure compatibility.
 - **Framework Support**: Works with Vue 2, Vue 3, React, and other major front-end frameworks.
+- **Responsive support**: Provides a consistent experience across both desktop and mobile devices.
 
 ## Installation
 
@@ -26,17 +27,60 @@ npm install drag-kit
 
 ## Usage
 
-### Basic Example
+### Quick Start
 
-```javascript
-import { createDraggable } from 'drag-kit';
+In Vue, using the onMounted hook:
 
-createDraggable('draggableElementId', {
-  initialPosition: { x: '100px', y: '100px' }, // Optional, supports calc
-});
+```html
+<template>
+  <div id="draggableElement" style="display: none;">Drag me!</div>
+</template>
+
+<script lang="ts">
+import { onMounted } from 'vue';
+import { createDraggable } from 'drag-kit'; 
+
+export default {
+  setup() {
+    onMounted(() => {
+      createDraggable('draggableElement', {
+        initialPosition: { x: '100px', y: '200px' }
+      });
+    });
+  }
+};
+</script>
+
 ```
 
+In React, using the useEffect hook:
+
+```tsx
+import React, { useEffect } from 'react';
+import { createDraggable } from 'drag-kit';
+
+const DraggableComponent: React.FC = () => {
+  useEffect(() => {
+    createDraggable('draggableElement', {
+      initialPosition: { x: '100px', y: '200px' }
+    });
+  }, []);
+
+  return <div id="draggableElement" style={{ display: 'none' }}>Drag me!</div>;
+};
+
+export default DraggableComponent;
+```
+
+Note: Setting the style display: none; offers the best effect.
+
 ### Parameter Details
+
+```ts
+createDraggable(elementId: string, options?: DraggableOptions): Draggable;
+```
+
+**Parameters**
 
 - **elementId**: The ID of the element to make draggable. (Required)
 - **options**: Configuration object with the following optional fields:
@@ -52,7 +96,7 @@ createDraggable('draggableElementId', {
   - `onDrag`: Callback function during dragging.
   - `onDragEnd`: Callback function when dragging ends.
 
-#### Detailed Explanation of `mode` Parameter
+**Detailed Explanation of `mode` Parameter**
 
 The `mode` parameter defines the drag area and determines where the element can be moved:
 
@@ -65,7 +109,7 @@ The `mode` parameter defines the drag area and determines where the element can 
 3. **`container` Mode**  
    The element can only be dragged within a specified **container**. The drag area is constrained by the container's boundaries. Set the `dragArea` parameter to specify the container element. This mode is suitable for dragging within specific areas like panels or dialogs.
 
-### Vue3 Example
+## Example Collection (Vue 3)
 
 ![效果动态图](https://i-blog.csdnimg.cn/direct/22b05079dbe744439933dcbcf860a065.gif)
 

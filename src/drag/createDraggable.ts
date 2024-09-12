@@ -10,6 +10,11 @@ export function createDraggable(elementId: string, options: DraggableOptions = {
     return null;
   }
 
+  // 因为涉及到初始定位，所以元素的 display 属性为 none
+  if (getComputedStyle(element).display !== 'none') {
+    console.error(`Element with id ${elementId} is visible. It's recommended to set display: none for proper initial positioning.`);
+  }
+
   // mode只能为空或者为'screen'、'page'、'container'中的一个
   if (options.mode && !['screen', 'page', 'container'].includes(options.mode)) {
     console.error('Invalid mode option. Valid options are "screen", "page", or "container".');
@@ -28,7 +33,9 @@ export function createDraggable(elementId: string, options: DraggableOptions = {
     element.remove();
     return null;
   } else {
-    // element.style.display = 'block';
+    if (getComputedStyle(element).display === 'none') {
+      element.style.display = 'block';
+    }
   }
 
   // 元素已经被初始化为可拖拽的
