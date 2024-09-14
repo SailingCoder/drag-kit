@@ -285,3 +285,7 @@ onMounted(() => {
 }
 </style>
 ```
+
+## Conclusion
+
+`drag-kit` is a streamlined and efficient solution for a variety of drag-and-drop scenarios. If you have any suggestions or issues, please feel free to provide feedback on our [GitHub Issues page](https://github.com/SailingCoder/drag-kit/issues).
