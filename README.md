@@ -4,7 +4,7 @@
 
 ![npm version](https://img.shields.io/npm/v/drag-kit)
 
-[English](https://github.com/SailingCoder/drag-kit/blob/main/doc/README_EN.md)
+[English Documentation](https://github.com/SailingCoder/drag-kit/blob/main/doc/README_EN.md)
 
 ## 特性
 
@@ -43,7 +43,7 @@ import { createDraggable } from 'drag-kit';
 export default {
   setup() {
     onMounted(() => {
-      const draggable = createDraggable('draggableElement', {
+      createDraggable('draggableElement', {
         initialPosition: { x: '100px', y: '200px' }
       });
     });
@@ -60,7 +60,7 @@ import { createDraggable } from 'drag-kit';
 
 const DraggableComponent: React.FC = () => {
   useEffect(() => {
-    const draggable = createDraggable('draggableElement', {
+    createDraggable('draggableElement', {
       initialPosition: { x: '100px', y: '200px' }
     });
   }, []);
@@ -71,7 +71,7 @@ const DraggableComponent: React.FC = () => {
 export default DraggableComponent;
 ```
 
-注意：设置样式 `display: none;` 效果最佳。
+建议将元素在初始化前设置为 display: none，提升更好的交互效果。
 
 ### API
 
@@ -95,6 +95,8 @@ createDraggable(elementId: string, options?: DraggableOptions): Draggable;
   - `onDrag`: 拖拽过程中的回调函数。
   - `onDragEnd`: 拖拽结束时的回调函数。
 
+  
+
 **`mode` 参数详细说明**
 
 `mode` 参数定义了拖拽元素的拖动区域，决定了拖拽元素可以移动的范围：
@@ -107,6 +109,62 @@ createDraggable(elementId: string, options?: DraggableOptions): Draggable;
 
 3. **`container` 模式**  
    元素只能在指定的 **容器** 内拖动，拖动区域受到容器边界的限制。通过设置 `dragArea` 参数来指定容器元素。适合局部拖动的场景，如面板或对话框内部的元素拖动。
+
+## 性能优化
+
+为了避免性能开销，建议在不需要拖拽功能时销毁实例，特别是在元素被移除或视图销毁时。
+
+**在 Vue 中销毁实例**
+
+```html
+<template>
+  <div id="draggableElement" style="display: none;">Drag me!</div>
+</template>
+
+<script lang="ts">
+import { onMounted } from 'vue';
+import { createDraggable } from 'drag-kit';
+
+export default {
+  setup() {
+    let draggable;
+
+    onMounted(() => {
+      draggable = createDraggable('draggableElement', {
+        initialPosition: { x: '100px', y: '200px' }
+      });
+    });
+    
+    onBeforeUnmount(() => {
+      draggable?.destroy();
+    });
+  }
+};
+</script>
+```
+
+**在 React 中销毁实例**
+
+```tsx
+import React, { useEffect } from 'react';
+import { createDraggable } from 'drag-kit';
+
+const DraggableComponent: React.FC = () => {
+  useEffect(() => {
+    const draggable = createDraggable('draggableElement', {
+      initialPosition: { x: '100px', y: '200px' }
+    });
+    
+    return () => {
+      draggable?.destroy();
+    };
+  }, []);
+
+  return <div id="draggableElement" style={{ display: 'none' }}>Drag me!</div>;
+};
+
+export default DraggableComponent;
+```
 
 ## 示例集合（以 Vue3 举例）
 
@@ -228,3 +286,7 @@ onMounted(() => {
 }
 </style>
 ```
+
+## 结语
+
+`drag-kit` 是一个简洁高效的解决方案，适用于多种拖拽场景。若有任何建议或问题，欢迎在[GitHub Issue](https://github.com/SailingCoder/drag-kit/issues) 中反馈。

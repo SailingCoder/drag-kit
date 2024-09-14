@@ -12,6 +12,7 @@ export class Draggable {
   diffY: number;
   mouseMoveHandler: ((event: MouseEvent) => void) | null;
   mouseUpHandler: ((event: MouseEvent) => void) | null;
+  observerElement: MutationObserver | null;
   config: DraggableOptions;
   initialPosition: { x: string; y: string };
 
@@ -26,6 +27,7 @@ export class Draggable {
     this.diffY = 0;
     this.mouseMoveHandler = null;
     this.mouseUpHandler = null;
+    this.observerElement = null;
     this.config = { ...Draggable.defaultOptions, ...options };
     this.initialPosition = {
       x: options.initialPosition?.x || '0px',
@@ -226,11 +228,61 @@ export class Draggable {
     restorePosition(this.element, this.shouldSave, { initialPosition: this.initialPosition });
   }
 
+  // 解决vue、React等框架中，重复渲染导致的元素 display 属性被修改的问题
+  observeElementVisibility(element: HTMLElement) {
+    this.observerElement = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (
+          mutation.attributeName === "style" &&
+          element.style.display === "none"
+        ) {
+          // 恢复为可见
+          element.style.display = "block";
+        }
+      });
+    });
+  
+    this.observerElement.observe(element, {
+      attributes: true,
+      attributeFilter: ["style"],
+    });
+  }
+
   init(): void {
     // 设置初始位置
     this.restorePosition();
     this.element.onmousedown = this.onMouseDown.bind(this);
     window.addEventListener('resize', this.updateBounds.bind(this));
     this.updateBounds();
+    this.observeElementVisibility(this.element);
+  }
+
+  destroy(): void {
+    try {
+      // 移除元素上的 mousedown 事件监听器
+      this.element.onmousedown = null;
+
+      // 如果鼠标移动和鼠标松开事件仍在监听，移除这些监听器
+      if (this.mouseMoveHandler) {
+        document.removeEventListener('mousemove', this.mouseMoveHandler);
+        this.mouseMoveHandler = null;
+      }
+
+      if (this.mouseUpHandler) {
+        document.removeEventListener('mouseup', this.mouseUpHandler);
+        this.mouseUpHandler = null;
+      }
+
+      // 移除窗口的 resize 事件监听器
+      window.removeEventListener('resize', this.updateBounds);
+
+      // 如果元素的 display 属性被修改，停止监听这些变化
+      if (this.observerElement) {
+        this.observerElement.disconnect();
+        this.observerElement = null;
+      }
+    } catch (error) {
+      console.warn('Error in destroy method:', error);
+    }
   }
 }

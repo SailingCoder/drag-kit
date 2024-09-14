@@ -10,6 +10,7 @@ export declare class Draggable {
     diffY: number;
     mouseMoveHandler: ((event: MouseEvent) => void) | null;
     mouseUpHandler: ((event: MouseEvent) => void) | null;
+    observerElement: MutationObserver | null;
     config: DraggableOptions;
     initialPosition: {
         x: string;
@@ -23,5 +24,7 @@ export declare class Draggable {
     onMouseUp(): void;
     savePosition(): void;
     restorePosition(): void;
+    observeElementVisibility(element: HTMLElement): void;
     init(): void;
+    destroy(): void;
 }

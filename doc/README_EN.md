@@ -4,7 +4,7 @@
 
 ![npm version](https://img.shields.io/npm/v/drag-kit)
 
-[English](https://github.com/SailingCoder/drag-kit/blob/main/README.md)
+[中文文档](https://github.com/SailingCoder/drag-kit/blob/main/README.md)
 
 ## Features
 
@@ -38,7 +38,7 @@ In Vue, using the onMounted hook:
 
 <script lang="ts">
 import { onMounted } from 'vue';
-import { createDraggable } from 'drag-kit'; 
+import { createDraggable } from 'drag-kit';
 
 export default {
   setup() {
@@ -50,7 +50,6 @@ export default {
   }
 };
 </script>
-
 ```
 
 In React, using the useEffect hook:
@@ -72,7 +71,7 @@ const DraggableComponent: React.FC = () => {
 export default DraggableComponent;
 ```
 
-Note: Setting the style display: none; offers the best effect.
+It's recommended to set the element's display to none before initialization to enhance the user experience.
 
 ### Parameter Details
 
@@ -108,6 +107,62 @@ The `mode` parameter defines the drag area and determines where the element can 
 
 3. **`container` Mode**  
    The element can only be dragged within a specified **container**. The drag area is constrained by the container's boundaries. Set the `dragArea` parameter to specify the container element. This mode is suitable for dragging within specific areas like panels or dialogs.
+
+## Performance Optimization
+
+To avoid performance overhead, it's recommended to destroy the draggable instance when the element is removed or the view is destroyed, especially when dragging is no longer needed.
+
+**Destroying the instance in Vue**
+
+```html
+<template>
+  <div id="draggableElement" style="display: none;">Drag me!</div>
+</template>
+
+<script lang="ts">
+import { onMounted, onBeforeUnmount } from 'vue';
+import { createDraggable } from 'drag-kit';
+
+export default {
+  setup() {
+    let draggable;
+
+    onMounted(() => {
+      draggable = createDraggable('draggableElement', {
+        initialPosition: { x: '100px', y: '200px' }
+      });
+    });
+    
+    onBeforeUnmount(() => {
+      draggable?.destroy();
+    });
+  }
+};
+</script>
+```
+
+**Destroying the instance in React**
+
+```tsx
+import React, { useEffect } from 'react';
+import { createDraggable } from 'drag-kit';
+
+const DraggableComponent: React.FC = () => {
+  useEffect(() => {
+    const draggable = createDraggable('draggableElement', {
+      initialPosition: { x: '100px', y: '200px' }
+    });
+    
+    return () => {
+      draggable?.destroy();
+    };
+  }, []);
+
+  return <div id="draggableElement" style={{ display: 'none' }}>Drag me!</div>;
+};
+
+export default DraggableComponent;
+```
 
 ## Example Collection (Vue 3)
 
