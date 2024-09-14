@@ -71,7 +71,42 @@ const DraggableComponent: React.FC = () => {
 export default DraggableComponent;
 ```
 
-建议将元素在初始化前设置为 display: none，提升更好的交互效果。
+在纯 JavaScript 中使用:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drag Kit Example</title>
+  <style>
+    #draggableElement {
+      width: 100px;
+      height: 100px;
+      background-color: #3498db;
+      position: absolute;
+      cursor: move;
+    }
+  </style>
+</head>
+<body>
+  <div id="draggableElement">拖拽我！</div>
+
+  <script src="https://unpkg.com/drag-kit/lib/drag-kit.umd.js"></script>
+  <script>
+    // 初始化拖拽功能
+    document.addEventListener('DOMContentLoaded', () => {
+      const draggable = dragKit.createDraggable('draggableElement', {
+        initialPosition: { x: '50px', y: '50px' }
+      });
+    });
+  </script>
+</body>
+</html>
+```
+
+**建议:将元素在初始化前设置为 display: none，提升更好的交互效果。**
 
 ### API
 

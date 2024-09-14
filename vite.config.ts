@@ -7,7 +7,7 @@ export default defineConfig({
     lib: {
       entry: './src/drag/index.ts',
       name: 'DragKit',
-      fileName: 'index',
+      fileName: 'drag-kit',
       formats: ['es', 'umd'],
     },
     rollupOptions: {
