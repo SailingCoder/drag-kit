@@ -72,6 +72,11 @@ export class Draggable {
   }
 
   onMouseDown(event: MouseEvent): void {
+    // 检查是否是右键点击，如果是右键，直接返回
+    if (event.button === 2) {
+      return;
+    }
+
     event.preventDefault();
     event.stopPropagation();
 
