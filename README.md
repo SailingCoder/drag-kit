@@ -1,6 +1,6 @@
 # `drag-kit` - 轻量级可拖拽元素库
 
-`drag-kit` 是一个轻量级的 JavaScript 库，旨在实现元素的拖拽功能。它提供了多种配置选项，包括初始位置、位置保存、拖拽区域限制、网格对齐和自动吸附等功能。该库不仅处理了内嵌 iframe 带来的拖拽问题，还兼容 Vue 2、Vue 3 和 React 等主流前端框架。
+`drag-kit` 是一个轻量级的 JavaScript 库，旨在实现元素的拖拽功能。drag-kit 提供了多种配置选项，包括初始位置、位置保存、拖拽区域限制、网格对齐和自动吸附等功能。该库不仅处理了内嵌 iframe 带来的拖拽问题，还兼容 Vue 2、Vue 3 和 React 等主流前端框架。
 
 ![npm version](https://img.shields.io/npm/v/drag-kit)
 
