@@ -18,6 +18,8 @@
 - **iframe 兼容**：处理 iframe 内的拖拽问题，确保兼容性。
 - **支持多种前端框架**：适用于 Vue 2、Vue 3、React 等前端框架。
 
+![效果动态图](https://i-blog.csdnimg.cn/direct/22b05079dbe744439933dcbcf860a065.gif)
+
 ## 安装
 
 ```bash

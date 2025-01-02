@@ -3,34 +3,34 @@
         <h1 style="padding-top: 80px;">Draggable Examples</h1>
     
         <!-- 基本拖拽功能（screen模式） -->
-        <div id="draggable-screen" class="draggable" ref="basic">
+        <div id="draggable-screen" class="draggable" ref="basic" @click="console.log('click')">
             Basic Draggable
         </div>
     
         <!-- 页面范围模式（page模式） -->
-        <div id="draggable-page" class="draggable" ref="page">
+        <div id="draggable-page" class="draggable" ref="page" @click="console.log('click')">
             Draggable in Page Mode
         </div>
     
         <!-- 设置边界 -->
         <div id="drag-container">
-            <div id="draggable-bounds" class="draggable" ref="bounds">
+            <div id="draggable-bounds" class="draggable" ref="bounds" @click="console.log('click')">
                 Draggable with Container Area
             </div>
         </div>
     
         <!-- 锁定 x 轴拖拽 -->
-        <div id="draggable-x-axis" class="draggable" ref="yAxis">
+        <div id="draggable-x-axis" class="draggable" ref="yAxis" @click="console.log('click')">
             Draggable on Y Axis
         </div>
     
         <!-- 网格模式拖拽 -->
-        <div id="draggable-grid" class="draggable" ref="grid">
+        <div id="draggable-grid" class="draggable" ref="grid" @click="console.log('click')">
             Draggable with Grid
         </div>
 
         <!-- 吸附模式 (screen模式下) -->
-        <div id="draggable-snap" class="draggable" ref="snap">
+        <div id="draggable-snap" class="draggable" ref="snap" @click="console.log('click')">
             Draggable with Snap
         </div>
     </div>

@@ -15,6 +15,9 @@ export class Draggable {
   observerElement: MutationObserver | null;
   config: DraggableOptions;
   initialPosition: { x: string; y: string };
+  startX: number;
+  startY: number;
+  dragThreshold: number;
 
   constructor(element: HTMLElement, options: DraggableOptions = {}) {
     this.element = element;
@@ -33,6 +36,9 @@ export class Draggable {
       x: options.initialPosition?.x || '0px',
       y: options.initialPosition?.y || '0px',
     };
+    this.startX = 0;
+    this.startY = 0;
+    this.dragThreshold = 5; // 判定为拖动的最小移动距离
 
     this.init();
   }
@@ -79,6 +85,9 @@ export class Draggable {
 
     event.preventDefault();
     event.stopPropagation();
+
+    this.startX = event.clientX;
+    this.startY = event.clientY;
 
     this.diffX = event.clientX - this.element.offsetLeft;
     this.diffY = event.clientY - this.element.offsetTop;
@@ -143,7 +152,31 @@ export class Draggable {
     if (this.config.onDrag) this.config.onDrag(this.element);
   }
 
-  onMouseUp(): void {
+  stopPreventEvent(event: MouseEvent): void {
+    event.stopPropagation();
+    event.preventDefault();
+  }
+
+  disableClickEvent(): void {
+    this.element.addEventListener(
+      'click',
+      this.stopPreventEvent,
+      true
+    );
+
+    setTimeout(() => {
+      this.element.removeEventListener('click', this.stopPreventEvent, true);
+    }, 0);
+  }
+
+  onMouseUp(event:any): void {
+    const moveX = Math.abs(event.clientX - this.startX);
+    const moveY = Math.abs(event.clientY - this.startY);
+
+    if (moveX > this.dragThreshold || moveY > this.dragThreshold) {
+      this.disableClickEvent()
+    }
+
     if (this.config.snapMode && this.config.snapMode !== 'none') {
       const snapBuffer = this.config.edgeBuffer || 0;
       const elementRect = this.element.getBoundingClientRect();
