@@ -155,14 +155,17 @@ createDraggable(elementId: string, options?: DraggableOptions): Draggable | Mobi
 3. **`container` 模式**  
    元素只能在指定的 **容器** 内拖动，拖动区域受到容器边界的限制。通过设置 `dragArea` 参数来指定容器元素。适合局部拖动的场景，如面板或对话框内部的元素拖动。
 
-## TypeScript 支持
+## 跨平台支持 & TypeScript
 
-drag-kit 提供完整的 TypeScript 类型定义，支持类型推断和智能提示：
+drag-kit 提供完整的跨平台支持和 TypeScript 类型定义：
+
+### 自动设备检测
+系统会自动检测设备类型并选择合适的拖拽实现，无需额外配置：
 
 ```typescript
-import { createDraggable, DraggableOptions, Draggable, MobileDraggable } from 'drag-kit';
+import { createDraggable, DraggableOptions } from 'drag-kit';
 
-// 完整的类型支持
+// 完整的 TypeScript 类型支持
 const options: DraggableOptions = {
   mode: 'screen',
   initialPosition: { x: '100px', y: '200px' },
@@ -181,23 +184,9 @@ const options: DraggableOptions = {
 };
 
 // 自动类型推断：Draggable | MobileDraggable | null
+// 桌面端：使用鼠标事件 (mousedown, mousemove, mouseup)
+// 移动端：使用触摸事件 (touchstart, touchmove, touchend)
 const draggable = createDraggable('elementId', options);
-
-// 手动指定类型
-const desktopDraggable: Draggable = new Draggable(element, options);
-const mobileDraggable: MobileDraggable = new MobileDraggable(element, options);
-```
-
-## 移动端/PC端支持
-
-### 自动检测
-drag-kit 会自动检测设备类型并选择合适的拖拽实现：
-
-```typescript
-// 无需额外配置，自动适配
-createDraggable('elementId', {
-  initialPosition: { x: '100px', y: '200px' }
-});
 ```
 
 ### 移动端特性
@@ -211,10 +200,10 @@ createDraggable('elementId', {
 import { Draggable, MobileDraggable } from 'drag-kit';
 
 // 强制使用桌面端实现
-const desktopDraggable = new Draggable(element, options);
+const desktopDraggable: Draggable = new Draggable(element, options);
 
 // 强制使用移动端实现  
-const mobileDraggable = new MobileDraggable(element, options);
+const mobileDraggable: MobileDraggable = new MobileDraggable(element, options);
 
 // 检测是否为移动设备
 const isMobile: boolean = MobileDraggable.isMobileDevice();
