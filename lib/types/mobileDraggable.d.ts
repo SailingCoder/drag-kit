@@ -1,5 +1,4 @@
 import { DraggableOptions } from './types';
-
 export declare class MobileDraggable {
     element: HTMLElement;
     shouldSave: boolean;
@@ -21,28 +20,19 @@ export declare class MobileDraggable {
     startY: number;
     dragThreshold: number;
     isDragging: boolean;
-    
-    static defaultOptions: DraggableOptions;
-    
     constructor(element: HTMLElement, options?: DraggableOptions);
-    
-    private getEventCoordinates(event: TouchEvent): {
-        x: number;
-        y: number;
-    };
-    
+    static defaultOptions: DraggableOptions;
+    private getEventCoordinates;
     updateBounds(): void;
     onTouchStart(event: TouchEvent): void;
     onTouchMove(event: TouchEvent): void;
-    onTouchEnd(event: TouchEvent): void;
     stopPreventEvent(event: TouchEvent): void;
     disableClickEvent(): void;
+    onTouchEnd(event: TouchEvent): void;
     savePosition(): void;
     restorePosition(): void;
     observeElementVisibility(element: HTMLElement): void;
-    
     static isMobileDevice(): boolean;
-    
     init(): void;
     destroy(): void;
 }

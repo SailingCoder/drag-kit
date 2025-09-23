@@ -14,6 +14,14 @@
   },
   "author": "Sailing",
   "license": "MIT",
+  "homepage": "https://github.com/SailingCoder/drag-kit#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SailingCoder/drag-kit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SailingCoder/drag-kit/issues"
+  },
   "keywords": [
     "drag",
     "draggable",
