@@ -4,7 +4,7 @@
 
 ![npm version](https://img.shields.io/npm/v/drag-kit)
 
-[简体中文](https://github.com/SailingCoder/drag-kit/blob/main/doc/README_EN.md)|[English](https://github.com/SailingCoder/drag-kit/blob/main/README.md)
+[简体中文](https://github.com/SailingCoder/drag-kit/blob/main/doc/README_EN.md) | [English](https://github.com/SailingCoder/drag-kit/blob/main/README.md)
 
 ## 特性
 
