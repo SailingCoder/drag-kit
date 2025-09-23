@@ -1,4 +1,7 @@
 import { createDraggable } from './createDraggable';
 import { DraggableOptions } from './types';
-export { createDraggable };
+import { Draggable } from './draggable';
+import { MobileDraggable } from './mobileDraggable';
+
+export { createDraggable, Draggable, MobileDraggable };
 export type { DraggableOptions };

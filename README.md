@@ -19,6 +19,7 @@
 - **iframe 兼容**：处理 iframe 内的拖拽问题，确保兼容性。
 - **支持多种前端框架**：适用于 Vue 2、Vue 3、React 等前端框架。
 - **跨平台兼容**：桌面端和移动端统一 API，自动适配。
+- **TypeScript 支持**：完整的类型定义，支持类型推断和智能提示。
 
 ![效果动态图](https://i-blog.csdnimg.cn/direct/22b05079dbe744439933dcbcf860a065.gif)
 
@@ -154,12 +155,45 @@ createDraggable(elementId: string, options?: DraggableOptions): Draggable | Mobi
 3. **`container` 模式**  
    元素只能在指定的 **容器** 内拖动，拖动区域受到容器边界的限制。通过设置 `dragArea` 参数来指定容器元素。适合局部拖动的场景，如面板或对话框内部的元素拖动。
 
+## TypeScript 支持
+
+drag-kit 提供完整的 TypeScript 类型定义，支持类型推断和智能提示：
+
+```typescript
+import { createDraggable, DraggableOptions, Draggable, MobileDraggable } from 'drag-kit';
+
+// 完整的类型支持
+const options: DraggableOptions = {
+  mode: 'screen',
+  initialPosition: { x: '100px', y: '200px' },
+  lockAxis: 'y',
+  gridSize: 50,
+  snapMode: 'auto',
+  onDragStart: (element: HTMLElement) => {
+    console.log('拖拽开始', element);
+  },
+  onDrag: (element: HTMLElement) => {
+    console.log('拖拽中', element);
+  },
+  onDragEnd: (element: HTMLElement) => {
+    console.log('拖拽结束', element);
+  }
+};
+
+// 自动类型推断：Draggable | MobileDraggable | null
+const draggable = createDraggable('elementId', options);
+
+// 手动指定类型
+const desktopDraggable: Draggable = new Draggable(element, options);
+const mobileDraggable: MobileDraggable = new MobileDraggable(element, options);
+```
+
 ## 移动端/PC端支持
 
 ### 自动检测
 drag-kit 会自动检测设备类型并选择合适的拖拽实现：
 
-```javascript
+```typescript
 // 无需额外配置，自动适配
 createDraggable('elementId', {
   initialPosition: { x: '100px', y: '200px' }
@@ -173,7 +207,7 @@ createDraggable('elementId', {
 - **完整兼容**：支持所有桌面端功能（网格、吸附、轴锁定等）
 
 ### 手动控制
-```javascript
+```typescript
 import { Draggable, MobileDraggable } from 'drag-kit';
 
 // 强制使用桌面端实现
@@ -183,7 +217,7 @@ const desktopDraggable = new Draggable(element, options);
 const mobileDraggable = new MobileDraggable(element, options);
 
 // 检测是否为移动设备
-const isMobile = MobileDraggable.isMobileDevice();
+const isMobile: boolean = MobileDraggable.isMobileDevice();
 ```
 
 ## 性能优化
