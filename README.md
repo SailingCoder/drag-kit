@@ -20,6 +20,8 @@
 - **Framework Support**: Works with Vue 2, Vue 3, React, and other major front-end frameworks.
 - **TypeScript Support**: Complete type definitions with type inference and IntelliSense.
 
+![img gif](https://i-blog.csdnimg.cn/direct/22b05079dbe744439933dcbcf860a065.gif)
+
 ## Installation
 
 ```bash
