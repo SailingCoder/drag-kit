@@ -1,38 +1,36 @@
-# `drag-kit` - 轻量级可拖拽元素库
+# `drag-kit` - A Lightweight Draggable Element Library
 
-`drag-kit` 是一个轻量级的 JavaScript 库，旨在实现元素的拖拽功能。drag-kit 提供了多种配置选项，包括初始位置、位置保存、拖拽区域限制、网格对齐和自动吸附等功能。该库不仅处理了内嵌 iframe 带来的拖拽问题，还兼容 Vue 2、Vue 3 和 React 等主流前端框架。
+`drag-kit` is a lightweight JavaScript library designed to implement drag-and-drop functionality for elements. It offers various configuration options, including initial positioning, position saving, drag area constraints, grid alignment, and auto-snapping. The library handles drag-and-drop issues within iframes and is compatible with major front-end frameworks such as Vue 2, Vue 3, and React.
 
 ![npm version](https://img.shields.io/npm/v/drag-kit)
 
-[English Documentation](https://github.com/SailingCoder/drag-kit/blob/main/doc/README_EN.md)
+[简体中文](https://github.com/SailingCoder/drag-kit/blob/main/doc/README_EN.md)|[English](https://github.com/SailingCoder/drag-kit/blob/main/README.md)
 
-## 特性
+## Features
 
-- **基础拖拽**：支持拖拽指定元素。
-- **全设备支持**：自动检测设备类型，支持手机、平板(iPad)、PC端，使用统一 API。
-- **方向锁定**：支持锁定拖拽方向（水平或垂直）。
-- **网格对齐**：支持拖拽时对齐到指定网格。
-- **自动吸附**：支持将元素自动吸附到视口边缘。
-- **边缘缓冲**：支持设置元素与边缘的缓冲距离。
-- **边界限制**：支持防止元素拖动超出指定区域。
-- **保存和恢复位置**：支持将拖拽位置保存到本地存储，并在页面加载时恢复。
-- **iframe 兼容**：处理 iframe 内的拖拽问题，确保兼容性。
-- **支持多种前端框架**：适用于 Vue 2、Vue 3、React 等前端框架。
-- **TypeScript 支持**：完整的类型定义，支持类型推断和智能提示。
+- **Basic Dragging**: Drag specified elements.
+- **Cross-Device Support**: Auto-detect device type, supports mobile phones, tablets (iPad), and PC with unified API.
+- **Axis Locking**: Lock dragging to a specific direction (horizontal or vertical).
+- **Grid Alignment**: Align dragging to a specified grid.
+- **Auto-Snapping**: Automatically snap elements to viewport edges.
+- **Edge Buffering**: Set a buffer distance between the element and the edges.
+- **Boundary Limiting**: Prevent elements from being dragged outside a specified area.
+- **Position Saving and Restoring**: Save drag positions to local storage and restore them on page reload.
+- **Iframe Compatibility**: Handle drag issues within iframes to ensure compatibility.
+- **Framework Support**: Works with Vue 2, Vue 3, React, and other major front-end frameworks.
+- **TypeScript Support**: Complete type definitions with type inference and IntelliSense.
 
-![效果动态图](https://i-blog.csdnimg.cn/direct/22b05079dbe744439933dcbcf860a065.gif)
-
-## 安装
+## Installation
 
 ```bash
 npm install drag-kit
 ```
 
-## 使用方法
+## Usage
 
-### 快速开始
+### Quick Start
 
-在 Vue 中，使用 onMounted 钩子：
+In Vue, using the onMounted hook:
 
 ```html
 <template>
@@ -55,7 +53,7 @@ export default {
 </script>
 ```
 
-在 React 中，使用 useEffect 钩子：
+In React, using the useEffect hook:
 
 ```tsx
 import React, { useEffect } from 'react';
@@ -74,95 +72,58 @@ const DraggableComponent: React.FC = () => {
 export default DraggableComponent;
 ```
 
-在纯 JavaScript 中使用:
+It's recommended to set the element's display to none before initialization to enhance the user experience.
 
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Drag Kit Example</title>
-  <style>
-    #draggableElement {
-      width: 100px;
-      height: 100px;
-      background-color: #3498db;
-      position: absolute;
-      cursor: move;
-    }
-  </style>
-</head>
-<body>
-  <div id="draggableElement">拖拽我！</div>
-
-  <script src="https://unpkg.com/drag-kit/lib/drag-kit.umd.js"></script>
-  <script>
-    // 初始化拖拽功能
-    document.addEventListener('DOMContentLoaded', () => {
-      const draggable = dragKit.createDraggable('draggableElement', {
-        initialPosition: { x: '50px', y: '50px' }
-      });
-    });
-  </script>
-</body>
-</html>
-```
-
-**建议:将元素在初始化前设置为 display: none，提升更好的交互效果。**
-
-### API
+### Parameter Details
 
 ```ts
 createDraggable(elementId: string, options?: DraggableOptions): Draggable | MobileDraggable;
 ```
 
-**自动设备检测**：`createDraggable` 会自动检测当前设备类型：
-- **移动设备**：返回 `MobileDraggable` 实例（触摸事件）
-- **桌面设备**：返回 `Draggable` 实例（鼠标事件）
+**Auto Device Detection**: `createDraggable` automatically detects the current device type:
+- **Touch Devices**: Returns `MobileDraggable` instance (touch events)
+- **Desktop Devices**: Returns `Draggable` instance (mouse events)
 
-**参数**
+**Parameters**
 
-- **elementId**: 要使其可拖拽的元素的 ID。（必填）
-- **options**: 配置选项对象，支持以下字段：（选填）
-  - `mode` (`'screen' | 'page' | 'container'`): 拖动模式（屏幕、页面或容器），默认是 `screen`。详见下文。
-  - `initialPosition`: 元素的初始位置，默认 x = 0，y = 0。
-  - `dragArea` (`HTMLElement`): 拖动区域（默认为 `null`，即全屏）。如果 `mode` 为 `container`，则需要设置该参数。
-  - `lockAxis` (`'x' | 'y' | 'none'`): 锁定拖动轴（x 轴、y 轴或无）。
-  - `edgeBuffer` (`number`): 边缘缓冲区。
-  - `gridSize` (`number`): 拖动网格大小（默认为 `undefined`，即无网格对齐）。
-  - `snapMode` (`'none' | 'auto' | 'right' | 'left' | 'top' | 'bottom'`): 自动吸附模式，默认为 `none`。
-  - `shouldSave`: 是否将拖拽位置保存到本地存储。
-  - `onDragStart`: 拖拽开始时的回调函数。
-  - `onDrag`: 拖拽过程中的回调函数。
-  - `onDragEnd`: 拖拽结束时的回调函数。
+- **elementId**: The ID of the element to make draggable. (Required)
+- **options**: Configuration object with the following optional fields:
+  - `mode` (`'screen' | 'page' | 'container'`): Drag mode (screen, page, or container). Default is `screen`. See details below.
+  - `initialPosition`: Initial position of the element, default x = 0, y = 0.
+  - `dragArea` (`HTMLElement`): Drag area (default is `null`, meaning full screen). Required if `mode` is `container`.
+  - `lockAxis` (`'x' | 'y' | 'none'`): Lock dragging to a specific axis (x-axis, y-axis, or none).
+  - `edgeBuffer` (`number`): Edge buffer distance.
+  - `gridSize` (`number`): Grid size for alignment (default is `undefined`, meaning no grid alignment).
+  - `snapMode` (`'none' | 'auto' | 'right' | 'left' | 'top' | 'bottom'`): Auto-snapping mode, default is `none`.
+  - `shouldSave`: Whether to save the drag position to local storage.
+  - `onDragStart`: Callback function when dragging starts.
+  - `onDrag`: Callback function during dragging.
+  - `onDragEnd`: Callback function when dragging ends.
 
-  
+**Detailed Explanation of `mode` Parameter**
 
-**`mode` 参数详细说明**
+The `mode` parameter defines the drag area and determines where the element can be moved:
 
-`mode` 参数定义了拖拽元素的拖动区域，决定了拖拽元素可以移动的范围：
+1. **`screen` Mode**  
+   The element can only be dragged within the current **viewport**, restricted to the screen boundaries. This mode is suitable for UI elements that need to remain within the screen, such as dialogs or toolbars.
 
-1. **`screen` 模式**  
-   元素只能在当前 **可视区域** 内拖拽，拖动范围受到屏幕边界限制。适用于需要固定在屏幕上的 UI 元素，如对话框、工具栏等。
+2. **`page` Mode**  
+   The element can be dragged anywhere within the **page** boundaries, regardless of viewport limits. The element can be moved to any part of the page, and overflow can be scrolled to view.
 
-2. **`page` 模式**  
-   元素可以在整个 **页面范围** 内拖动，不受视口限制，即使页面有滚动条，元素也能被拖动到页面的任意位置，超出当前可视区域的部分可以通过滚动显示。
+3. **`container` Mode**  
+   The element can only be dragged within a specified **container**. The drag area is constrained by the container's boundaries. Set the `dragArea` parameter to specify the container element. This mode is suitable for dragging within specific areas like panels or dialogs.
 
-3. **`container` 模式**  
-   元素只能在指定的 **容器** 内拖动，拖动区域受到容器边界的限制。通过设置 `dragArea` 参数来指定容器元素。适合局部拖动的场景，如面板或对话框内部的元素拖动。
+## Cross-Platform Support & TypeScript
 
-## 跨平台支持 & TypeScript
+drag-kit supports mobile phones, tablets (iPad), and PC with complete cross-platform support and TypeScript type definitions:
 
-drag-kit 支持手机、平板(iPad)、PC端，提供完整的跨平台支持和 TypeScript 类型定义：
-
-### 自动设备检测
-系统会自动检测设备类型并选择合适的拖拽实现，无需额外配置：
+### Auto Device Detection
+The system automatically detects device type and selects appropriate drag implementation without additional configuration:
 
 ```typescript
 import { createDraggable, DraggableOptions } from 'drag-kit';
 
-// 完整的 TypeScript 类型支持
+// Complete TypeScript type support
 const options: DraggableOptions = {
   mode: 'screen',
   initialPosition: { x: '100px', y: '200px' },
@@ -170,45 +131,45 @@ const options: DraggableOptions = {
   gridSize: 50,
   snapMode: 'auto',
   onDragStart: (element: HTMLElement) => {
-    console.log('拖拽开始', element);
+    console.log('Drag started', element);
   },
   onDrag: (element: HTMLElement) => {
-    console.log('拖拽中', element);
+    console.log('Dragging', element);
   },
   onDragEnd: (element: HTMLElement) => {
-    console.log('拖拽结束', element);
+    console.log('Drag ended', element);
   }
 };
 
-// 自动类型推断：Draggable | MobileDraggable | null
+// Auto type inference: Draggable | MobileDraggable | null
 const draggable = createDraggable('elementId', options);
 ```
 
-### 触摸设备特性（手机/平板）
-- **触摸拖拽**：支持单指触摸拖拽
-- **防止滚动**：拖拽时自动防止页面滚动
-- **多点触摸处理**：只响应第一个触摸点
-- **完整兼容**：支持所有PC端功能（网格、吸附、轴锁定等）
+### Touch Device Features (Mobile/Tablet)
+- **Touch Dragging**: Support single-finger touch dragging
+- **Prevent Scrolling**: Automatically prevent page scrolling during dragging
+- **Multi-touch Handling**: Only respond to the first touch point
+- **Full Compatibility**: Support all PC features (grid, snapping, axis locking, etc.)
 
-### 手动控制
+### Manual Control
 ```typescript
 import { Draggable, MobileDraggable } from 'drag-kit';
 
-// 强制使用PC端实现
+// Force PC implementation
 const desktopDraggable: Draggable = new Draggable(element, options);
 
-// 强制使用触摸设备实现  
+// Force touch device implementation  
 const mobileDraggable: MobileDraggable = new MobileDraggable(element, options);
 
-// 检测是否为触摸设备（手机/平板）
+// Detect if it's a touch device (mobile/tablet)
 const isMobile: boolean = MobileDraggable.isMobileDevice();
 ```
 
-## 性能优化
+## Performance Optimization
 
-为了避免性能开销，建议在不需要拖拽功能时销毁实例，特别是在元素被移除或视图销毁时。
+To avoid performance overhead, it's recommended to destroy the draggable instance when the element is removed or the view is destroyed, especially when dragging is no longer needed.
 
-**在 Vue 中销毁实例**
+**Destroying the instance in Vue**
 
 ```html
 <template>
@@ -216,7 +177,7 @@ const isMobile: boolean = MobileDraggable.isMobileDevice();
 </template>
 
 <script lang="ts">
-import { onMounted } from 'vue';
+import { onMounted, onBeforeUnmount } from 'vue';
 import { createDraggable } from 'drag-kit';
 
 export default {
@@ -237,7 +198,7 @@ export default {
 </script>
 ```
 
-**在 React 中销毁实例**
+**Destroying the instance in React**
 
 ```tsx
 import React, { useEffect } from 'react';
@@ -260,46 +221,47 @@ const DraggableComponent: React.FC = () => {
 export default DraggableComponent;
 ```
 
-## 示例集合（以 Vue3 举例）
+## Example Collection (Vue 3)
 
 ![效果动态图](https://i-blog.csdnimg.cn/direct/22b05079dbe744439933dcbcf860a065.gif)
 
+代码
 
 ```html
 <template>
     <div class="example-container">
-        <h1 style="padding-top: 80px;">拖拽示例</h1>
+        <h1 style="padding-top: 80px;">Draggable Examples</h1>
     
-        <!-- 基本拖拽功能（screen 模式） -->
-        <div id="draggable-screen" class="draggable" ref="basic" style="display: none;">
-            基本拖拽
+        <!-- Basic Dragging (screen mode) -->
+        <div id="draggable-screen" class="draggable" ref="basic">
+            Basic Draggable
         </div>
     
-        <!-- 页面范围模式（page 模式） -->
-        <div id="draggable-page" class="draggable" ref="page" style="display: none;">
-            页面模式拖拽
+        <!-- Page Mode Dragging -->
+        <div id="draggable-page" class="draggable" ref="page">
+            Draggable in Page Mode
         </div>
     
-        <!-- 设置边界 -->
+        <!-- Container Boundaries -->
         <div id="drag-container">
-            <div id="draggable-bounds" class="draggable" ref="bounds" style="display: none;">
-                容器内拖拽
+            <div id="draggable-bounds" class="draggable" ref="bounds">
+                Draggable with Container Area
             </div>
         </div>
     
-        <!-- 锁定 x 轴拖拽 -->
-        <div id="draggable-x-axis" class="draggable" ref="yAxis" style="display: none;">
-            锁定 Y 轴拖拽
+        <!-- Lock x-axis Dragging -->
+        <div id="draggable-x-axis" class="draggable" ref="yAxis">
+            Draggable on Y Axis
         </div>
     
-        <!-- 网格模式拖拽 -->
-        <div id="draggable-grid" class="draggable" ref="grid" style="display: none;">
-            网格对齐拖拽
+        <!-- Grid Mode Dragging -->
+        <div id="draggable-grid" class="draggable" ref="grid">
+            Draggable with Grid
         </div>
 
-        <!-- 吸附模式 (screen 模式下) -->
-        <div id="draggable-snap" class="draggable" ref="snap" style="display: none;">
-            吸附模式拖拽
+        <!-- Snap Mode (screen mode) -->
+        <div id="draggable-snap" class="draggable" ref="snap">
+            Draggable with Snap
         </div>
     </div>
 </template>
@@ -313,41 +275,41 @@ const page = ref<HTMLElement | null>(null);
 const bounds = ref<HTMLElement | null>(null);
 const yAxis = ref<HTMLElement | null>(null);
 const grid = ref<HTMLElement | null>(null);
-const snap = ref<HTMLElement | null>(null); // 新增吸附示例
+const snap = ref<HTMLElement | null>(null); // New snap example
   
 onMounted(() => {
-    // 基本拖拽功能
+    // Basic Dragging
     createDraggable(basic.value!.id);
   
-    // 页面模式拖拽
+    // Page Mode Dragging
     createDraggable(page.value!.id, {
         mode: 'page',
         initialPosition: { x: '0px', y: '200px' },
     });
   
-    // 设置边界
+    // Container Boundaries
     createDraggable(bounds.value!.id, {
         mode: 'container',
-        dragArea: document.getElementById('drag-container')!, // 拖拽区域为指定元素
-        edgeBuffer: 20,          // 设置缓冲区域，防止超出边界
+        dragArea: document.getElementById('drag-container')!, // Drag area is specified element
+        edgeBuffer: 20,          // Set buffer distance to prevent exceeding boundaries
     });
 
-    // 锁定 x 轴拖拽
+    // Lock x-axis Dragging
     createDraggable(yAxis.value!.id, { 
         lockAxis: 'y', 
         initialPosition: { x: '0px', y: '400px' } 
     });
   
-    // 网格模式拖拽
+    // Grid Mode Dragging
     createDraggable(grid.value!.id, {
         gridSize: 50,  
-        // snapMode: 'auto', // 拖拽时每 50px 吸附
+        // snapMode: 'auto', // Snap every 50px while dragging
         initialPosition: { x: '0px', y: '600px' },
     });
 
-    // 吸附模式拖拽 (screen 模式下)
+    // Snap Mode Dragging (screen mode)
     createDraggable(snap.value!.id, {
-      mode: 'screen', // 使用 screen 模式
+      mode: 'screen', // Use screen mode
       snapMode: 'auto',
       initialPosition: { x: 'calc(100vw - 230px)', y: '0' },
     });
@@ -381,6 +343,6 @@ onMounted(() => {
 </style>
 ```
 
-## 结语
+## Conclusion
 
-`drag-kit` 是一个简洁高效的跨平台拖拽解决方案，适用于桌面端和移动端的多种拖拽场景。若有任何建议或问题，欢迎在[GitHub Issue](https://github.com/SailingCoder/drag-kit/issues) 中反馈。
+`drag-kit` is a streamlined and efficient cross-platform drag-and-drop solution for mobile phones, tablets, and PC. If you have any suggestions or issues, please feel free to provide feedback on our [GitHub Issues page](https://github.com/SailingCoder/drag-kit/issues).

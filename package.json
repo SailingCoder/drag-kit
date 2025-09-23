@@ -1,7 +1,7 @@
 {
   "name": "drag-kit",
-  "version": "1.0.9",
-  "description": "实现元素的拖拽功能，支持vue2、vue3、react",
+  "version": "1.1.0",
+  "description": "Lightweight cross-platform drag library supporting mobile, tablet, PC with Vue2/Vue3/React compatibility and full TypeScript support",
   "main": "lib/drag-kit.umd.js",
   "module": "lib/drag-kit.mjs",
   "types": "lib/types/index.d.ts",
@@ -16,10 +16,18 @@
   "license": "MIT",
   "keywords": [
     "drag",
+    "draggable",
+    "mobile",
+    "tablet",
+    "ipad",
+    "pc",
+    "touch",
     "vue",
     "vue3",
     "vue2",
-    "react"
+    "react",
+    "typescript",
+    "cross-platform"
   ],
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
