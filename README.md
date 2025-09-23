@@ -9,6 +9,7 @@
 ## 特性
 
 - **基础拖拽**：支持拖拽指定元素。
+- **移动端支持**：自动检测设备类型，支持触摸拖拽和鼠标拖拽。
 - **方向锁定**：支持锁定拖拽方向（水平或垂直）。
 - **网格对齐**：支持拖拽时对齐到指定网格。
 - **自动吸附**：支持将元素自动吸附到视口边缘。
@@ -17,6 +18,7 @@
 - **保存和恢复位置**：支持将拖拽位置保存到本地存储，并在页面加载时恢复。
 - **iframe 兼容**：处理 iframe 内的拖拽问题，确保兼容性。
 - **支持多种前端框架**：适用于 Vue 2、Vue 3、React 等前端框架。
+- **跨平台兼容**：桌面端和移动端统一 API，自动适配。
 
 ![效果动态图](https://i-blog.csdnimg.cn/direct/22b05079dbe744439933dcbcf860a065.gif)
 
@@ -29,6 +31,8 @@ npm install drag-kit
 ## 使用方法
 
 ### 快速开始
+
+**注意：drag-kit 现在支持移动端！系统会自动检测设备类型并选择合适的拖拽实现（触摸事件 vs 鼠标事件）。**
 
 在 Vue 中，使用 onMounted 钩子：
 
@@ -112,8 +116,12 @@ export default DraggableComponent;
 ### API
 
 ```ts
-createDraggable(elementId: string, options?: DraggableOptions): Draggable;
+createDraggable(elementId: string, options?: DraggableOptions): Draggable | MobileDraggable;
 ```
+
+**自动设备检测**：`createDraggable` 会自动检测当前设备类型：
+- **移动设备**：返回 `MobileDraggable` 实例（触摸事件）
+- **桌面设备**：返回 `Draggable` 实例（鼠标事件）
 
 **参数**
 
@@ -145,6 +153,38 @@ createDraggable(elementId: string, options?: DraggableOptions): Draggable;
 
 3. **`container` 模式**  
    元素只能在指定的 **容器** 内拖动，拖动区域受到容器边界的限制。通过设置 `dragArea` 参数来指定容器元素。适合局部拖动的场景，如面板或对话框内部的元素拖动。
+
+## 移动端/PC端支持
+
+### 自动检测
+drag-kit 会自动检测设备类型并选择合适的拖拽实现：
+
+```javascript
+// 无需额外配置，自动适配
+createDraggable('elementId', {
+  initialPosition: { x: '100px', y: '200px' }
+});
+```
+
+### 移动端特性
+- **触摸拖拽**：支持单指触摸拖拽
+- **防止滚动**：拖拽时自动防止页面滚动
+- **多点触摸处理**：只响应第一个触摸点
+- **完整兼容**：支持所有桌面端功能（网格、吸附、轴锁定等）
+
+### 手动控制
+```javascript
+import { Draggable, MobileDraggable } from 'drag-kit';
+
+// 强制使用桌面端实现
+const desktopDraggable = new Draggable(element, options);
+
+// 强制使用移动端实现  
+const mobileDraggable = new MobileDraggable(element, options);
+
+// 检测是否为移动设备
+const isMobile = MobileDraggable.isMobileDevice();
+```
 
 ## 性能优化
 
@@ -325,4 +365,4 @@ onMounted(() => {
 
 ## 结语
 
-`drag-kit` 是一个简洁高效的解决方案，适用于多种拖拽场景。若有任何建议或问题，欢迎在[GitHub Issue](https://github.com/SailingCoder/drag-kit/issues) 中反馈。
+`drag-kit` 是一个简洁高效的跨平台拖拽解决方案，适用于桌面端和移动端的多种拖拽场景。若有任何建议或问题，欢迎在[GitHub Issue](https://github.com/SailingCoder/drag-kit/issues) 中反馈。

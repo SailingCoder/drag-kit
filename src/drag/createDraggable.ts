@@ -1,7 +1,8 @@
 import { Draggable } from './draggable';
+import { MobileDraggable } from './mobileDraggable';
 import { DraggableOptions } from './types';
 
-export function createDraggable(elementId: string, options: DraggableOptions = {}): Draggable | null {
+export function createDraggable(elementId: string, options: DraggableOptions = {}): Draggable | MobileDraggable | null {
   const element = document.getElementById(elementId) as HTMLElement;
 
   // 如果找不到对应的元素，输出错误信息并返回 null
@@ -45,5 +46,12 @@ export function createDraggable(elementId: string, options: DraggableOptions = {
   }
   element.dataset.draggableInitialized = 'true';
 
-  return new Draggable(element, options);
+  // 检测设备类型，自动选择合适的拖拽实现
+  if (MobileDraggable.isMobileDevice()) {
+    console.log('Mobile device detected, using MobileDraggable');
+    return new MobileDraggable(element, options);
+  } else {
+    console.log('Desktop device detected, using Draggable');
+    return new Draggable(element, options);
+  }
 }
