@@ -9,7 +9,7 @@
 ## 特性
 
 - **基础拖拽**：支持拖拽指定元素。
-- **移动端支持**：自动检测设备类型，支持触摸拖拽和鼠标拖拽。
+- **全设备支持**：自动检测设备类型，支持手机、平板(iPad)、PC端。
 - **方向锁定**：支持锁定拖拽方向（水平或垂直）。
 - **网格对齐**：支持拖拽时对齐到指定网格。
 - **自动吸附**：支持将元素自动吸附到视口边缘。
@@ -18,7 +18,7 @@
 - **保存和恢复位置**：支持将拖拽位置保存到本地存储，并在页面加载时恢复。
 - **iframe 兼容**：处理 iframe 内的拖拽问题，确保兼容性。
 - **支持多种前端框架**：适用于 Vue 2、Vue 3、React 等前端框架。
-- **跨平台兼容**：桌面端和移动端统一 API，自动适配。
+- **跨平台兼容**：手机、平板、PC端统一 API，自动适配。
 - **TypeScript 支持**：完整的类型定义，支持类型推断和智能提示。
 
 ![效果动态图](https://i-blog.csdnimg.cn/direct/22b05079dbe744439933dcbcf860a065.gif)
@@ -32,8 +32,6 @@ npm install drag-kit
 ## 使用方法
 
 ### 快速开始
-
-**注意：drag-kit 现在支持移动端！系统会自动检测设备类型并选择合适的拖拽实现（触摸事件 vs 鼠标事件）。**
 
 在 Vue 中，使用 onMounted 钩子：
 
@@ -157,7 +155,7 @@ createDraggable(elementId: string, options?: DraggableOptions): Draggable | Mobi
 
 ## 跨平台支持 & TypeScript
 
-drag-kit 提供完整的跨平台支持和 TypeScript 类型定义：
+drag-kit 支持手机、平板(iPad)、PC端，提供完整的跨平台支持和 TypeScript 类型定义：
 
 ### 自动设备检测
 系统会自动检测设备类型并选择合适的拖拽实现，无需额外配置：
@@ -184,28 +182,26 @@ const options: DraggableOptions = {
 };
 
 // 自动类型推断：Draggable | MobileDraggable | null
-// 桌面端：使用鼠标事件 (mousedown, mousemove, mouseup)
-// 移动端：使用触摸事件 (touchstart, touchmove, touchend)
 const draggable = createDraggable('elementId', options);
 ```
 
-### 移动端特性
+### 触摸设备特性（手机/平板）
 - **触摸拖拽**：支持单指触摸拖拽
 - **防止滚动**：拖拽时自动防止页面滚动
 - **多点触摸处理**：只响应第一个触摸点
-- **完整兼容**：支持所有桌面端功能（网格、吸附、轴锁定等）
+- **完整兼容**：支持所有PC端功能（网格、吸附、轴锁定等）
 
 ### 手动控制
 ```typescript
 import { Draggable, MobileDraggable } from 'drag-kit';
 
-// 强制使用桌面端实现
+// 强制使用PC端实现
 const desktopDraggable: Draggable = new Draggable(element, options);
 
-// 强制使用移动端实现  
+// 强制使用触摸设备实现  
 const mobileDraggable: MobileDraggable = new MobileDraggable(element, options);
 
-// 检测是否为移动设备
+// 检测是否为触摸设备（手机/平板）
 const isMobile: boolean = MobileDraggable.isMobileDevice();
 ```
 
